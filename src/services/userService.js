@@ -1,6 +1,6 @@
 const User = require('../models/UsuarioSchema')
 
-const ciacaodeUsuario = async (userdata) => {
+const criacaodeUsuario = async (userdata) => {
     try {
         const user = await User.create(userdata);
         return user;
@@ -8,7 +8,7 @@ const ciacaodeUsuario = async (userdata) => {
     } catch (error) {
         throw new error('Erro ao criar usuario' + error.message);
     }
-};
+}
 
 const listarUsuarios = async () => {
     try {
@@ -19,10 +19,43 @@ const listarUsuarios = async () => {
     }
 };
 
-//const listarPorId =  async (id) => {
+const listarPorId = async (id) => {
+    try {
+        const user = await User.findById(id);
+        if (!user) throw new Error('Usuário não encontrado');
+        return user;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+};
 
+const atualizaUsuarioPorId = async (id, updateData) => {
+    try {
+        const user = await User.findByIdAndUpdate(id, updateData, { new: true });
+        if (!user) throw new Error('Usuário não encontrado');
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
+const deletarPorId = async (id) => {
+    try{
+        const user = await User.findByIdAndDelete(id);
+        if (!user) throw new Erro("Usuário não encontrado");
+        return user;
+    } catch (error) {
+        throw new Error(error.message)
+    }   
+};
 
+module.exports = {
+    criacaodeUsuario,
+    listarUsuarios,
+    listarPorId,
+    atualizaUsuarioPorId,
+    deletarPorId,
+};
 
 
 
