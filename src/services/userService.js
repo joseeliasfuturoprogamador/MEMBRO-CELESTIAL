@@ -4,7 +4,6 @@ const criacaodeUsuario = async (userdata) => {
     try {
         const user = await User.create(userdata);
         return user;
-
     } catch (error) {
         throw new error('Erro ao criar usuario' + error.message);
     }
@@ -40,13 +39,13 @@ const atualizaUsuarioPorId = async (id, updateData) => {
 };
 
 const deletarPorId = async (id) => {
-    try{
+    try {
         const user = await User.findByIdAndDelete(id);
         if (!user) throw new Erro("Usuário não encontrado");
         return user;
     } catch (error) {
         throw new Error(error.message)
-    }   
+    }
 };
 
 module.exports = {
