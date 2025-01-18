@@ -1,13 +1,14 @@
 const express = require("express");
 const connect = require("./database/connection");
 const userRoutes = require('./Routes/useRoutes.js');
+
 const app = express();
 
 connect();
 
 app.use(express.json());
-
-app.get("/",(req, res) => {
+app.use('/api', userRoutes)
+app.get("/", (req, res) => {
     res.send("Servidor rodando!")
 })
 

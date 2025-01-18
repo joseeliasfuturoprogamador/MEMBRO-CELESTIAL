@@ -1,6 +1,6 @@
 const userService = require('../services/userService');
 const User = require('../models/UsuarioSchema');
-const { json } = require('express');
+
 
 
 const criarUsuario = async (req, res) => {
@@ -10,10 +10,10 @@ const criarUsuario = async (req, res) => {
         return res.status(400).json({message: "Todos os campos são obrigatórios" });
     }
     try {
-        const { user } = await userService.criacaodeUsuario(req.body);
+        const  user  = await userService.criacaodeUsuario(req.body);
         res.status(201).json({ message: "Usuário criado com sucesso", user });
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        res.status(500).json({ message: "nao deu certo"})
     }
 };
 
