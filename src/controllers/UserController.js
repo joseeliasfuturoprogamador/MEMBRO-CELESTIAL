@@ -37,12 +37,12 @@ const listarPorId = async (req, res) => {
 
 const AtualizarPorId = async (req, res) => {
     try{
- const users = await userServic.AtualizarPorId(req.params.id, req.body);
- res.status(200).json(users)
+ const users = await userService.atualizaUsuarioPorId(req.params.id, req.body, { new : true });
+ res.status(200).json({message: "Usuário Atualizado com sucesso!", users} )
     } catch (error){
-        res.status(404).json({ message: "Erro ao atualizar por Id"});
+        res.status(404).json({ error: error.message});
     }
-}
+};
 
 const DeletarPorId = async (req, res) => {
     try{
