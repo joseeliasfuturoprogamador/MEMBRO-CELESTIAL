@@ -1,4 +1,10 @@
 const User = require('../models/UsuarioSchema')
+const path = require('path')
+const pdf = require('html-pdf')
+const exphbs = require('ExpressHandlebars')
+const { ExpressHandlebars } = require('express-handlebars')
+const { promises } = require('dns')
+const { error } = require('console')
 
 const criacaodeUsuario = async (userdata) => {
     try {
@@ -47,6 +53,30 @@ const deletarPorId = async (id) => {
         throw new Error(error.message)
     }
 };
+
+const hbs = exphbs.create();
+
+const compileTemplate = ExpressHandlebars = async (template, data) => {
+    return new promise((resolve, reject) => {
+        hbs.renderView(template, data, (err, html) => {
+            if (error) reject(err);
+            else resolve(html);
+        }); 
+    });
+};
+
+exports.gerarCarta = async (id) => {
+    try{
+        const membro = await Membro.findById(id);
+        if (!membro) throw new error("Membro não encontrado");
+        
+        membro.dataMembro = new Date(membro.dataMembro).toLocaleDateString(pt-BR);
+
+        const html =  await compileTemplate(path.join(__dirname, '..viwes/carat.carta'))
+    }
+}
+
+
 
 module.exports = {
     criacaodeUsuario,
