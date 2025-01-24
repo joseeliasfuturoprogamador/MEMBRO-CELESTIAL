@@ -1,26 +1,27 @@
-const User = require('../models/UsuarioSchema')
-const path = require('path')
-const pdf = require('html-pdf')
-const exphbs = require('ExpressHandlebars')
-const { ExpressHandlebars } = require('express-handlebars')
-const { promises } = require('dns')
-const { error } = require('console')
+const User = require('../models/UsuarioSchema');
+const path = require('path');
+const pdf = require('html-pdf');
+const { create } = require('express-handlebars');
 
-const criacaodeUsuario = async (userdata) => {
+// Configuração do Handlebars
+const hbs = create({
+    extname: '.handlebars',
+    defaultLayout: false,
+});
+
+const criacaoDeUsuario = async (userdata) => {
     try {
-        const user = await User.create(userdata);
-        return user;
+        return await User.create(userdata);
     } catch (error) {
-        throw new error('Erro ao criar usuario' + error.message);
+        throw new Error('Erro ao criar usuário: ' + error.message);
     }
-}
+};
 
 const listarUsuarios = async () => {
     try {
-        const users = await User.find();
-        return users;
+        return await User.find();
     } catch (error) {
-        throw new error('Erro ao criar usuario' + error.message);
+        throw new Error('Erro ao listar usuários: ' + error.message);
     }
 };
 
@@ -30,7 +31,7 @@ const listarPorId = async (id) => {
         if (!user) throw new Error('Usuário não encontrado');
         return user;
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error.message);
     }
 };
 
@@ -47,45 +48,55 @@ const atualizaUsuarioPorId = async (id, updateData) => {
 const deletarPorId = async (id) => {
     try {
         const user = await User.findByIdAndDelete(id);
-        if (!user) throw new Erro("Usuário não encontrado");
+        if (!user) throw new Error("Usuário não encontrado");
         return user;
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error.message);
     }
 };
 
-const hbs = exphbs.create();
-
-const compileTemplate = ExpressHandlebars = async (template, data) => {
-    return new promise((resolve, reject) => {
-        hbs.renderView(template, data, (err, html) => {
-            if (error) reject(err);
-            else resolve(html);
-        }); 
-    });
+const compileTemplate = async (templatePath, data) => {
+    try {
+        const templateFile = require('fs').readFileSync(templatePath, 'utf-8');
+        const template = hbs.handlebars.compile(templateFile);
+        return template(data);
+    } catch (error) {
+        throw new Error('Erro ao compilar template: ' + error.message);
+    }
 };
 
-exports.gerarCarta = async (id) => {
-    try{
-        const membro = await Membro.findById(id);
-        if (!membro) throw new error("Membro não encontrado");
-        
-        membro.dataMembro = new Date(membro.dataMembro).toLocaleDateString(pt-BR);
+const gerarCarta = async (id) => {
+    try {
+        const membro = await User.findById(id);
+        if (!membro) throw new Error("Membro não encontrado");
 
-        const html =  await compileTemplate(path.join(__dirname, '..viwes/carat.carta'))
+        console.log("Membro encontrado", membro)
+
+        membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
+        membro.batismo = new Date(membro.batismo).toLocaleDateString('pt-BR');
+
+
+        const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');
+
+        const html = await compileTemplate(templatePath, membro);
+
+        return new Promise((resolve, reject) => {
+            pdf.create(html).toBuffer((err, buffer) => {
+                if (err) reject(err);
+                else resolve(buffer);
+            });
+        });
+
+    } catch (error) {
+        throw new Error("Erro ao gerar a carta" + error.message);
     }
-}
-
-
+};
 
 module.exports = {
-    criacaodeUsuario,
+    criacaoDeUsuario,
     listarUsuarios,
     listarPorId,
     atualizaUsuarioPorId,
     deletarPorId,
+    gerarCarta
 };
-
-
-
-

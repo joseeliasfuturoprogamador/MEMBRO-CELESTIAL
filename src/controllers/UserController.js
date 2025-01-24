@@ -53,6 +53,19 @@ const DeletarPorId = async (req, res) => {
     }
 }
 
+const gerarCarta = async (req, res) => {
+    try {
+        const pdfBuffer = await userService.gerarCarta(req.params.id);
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename="carta.pdf"',
+        });
+        res.send(pdfBuffer);
+    } catch (error) {
+        res.status(500).json({ sucesso: false, mensagem: error.message });
+    }
+};
+
 
 module.exports = {
     criarUsuario,
@@ -60,4 +73,5 @@ module.exports = {
     listarPorId,
     AtualizarPorId,
     DeletarPorId,   
+    gerarCarta
 }
