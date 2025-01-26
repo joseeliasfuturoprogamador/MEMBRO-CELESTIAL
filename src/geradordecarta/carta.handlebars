@@ -1,26 +1,63 @@
+{{! Carta de Mudança - Template Handlebars }}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Carta de Recomendação</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta de Mudança</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .igreja-info, .corpo-carta, .assinatura {
+            margin-bottom: 20px;
+        }
+        .igreja-info p, .corpo-carta p {
+            text-align: center;
+        }
+        .assinatura {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .assinatura p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem vindo ao Membro celestial</h1>
-    <br>
-    <h1>Carta de Recomendação</h1>
-
-    <p><strong>Nome:</strong> {{nome}}</p>
-    <p><strong>Data de Nascimento:</strong> {{nascimento}}</p>
-    <p><strong>Endereço:</strong> {{endereco}}, {{bairro}}</p>
-    <p><strong>Filiação:</strong> {{filiacao}}</p>
-    <p><strong>Estado Civil:</strong> {{estadocivil}}</p>
-    <p><strong>CPF:</strong> {{cpf}}</p>
-    <p><strong>Área:</strong> {{area}}</p>
-    <p><strong>Congregação:</strong> {{congregacao}}</p>
-    <p><strong>Dirigente:</strong> {{dirigente}}</p>
-    <p><strong>Convenção:</strong> {{convencao}}</p>
-    <p><strong>Função:</strong> {{funcao}}</p>
-    <p><strong>Discipulado:</strong> {{discipulado}}</p>
-    <p><strong>Data de Batismo:</strong> {{batismo}}</p>
+    <div class="container">
+        <div class="igreja-info">
+            <h2>Igreja Evangélica Assembleia de Deus</h2>
+            <p>Rua do Comércio, nº 90 - Centro, Cachoeira Grande/MA</p>
+            <p>Presidente: Pr. Marcos Vinícius S. Costa</p>
+        </div>
+        <h1>Carta de Mudança</h1>
+        <div class="corpo-carta">
+            <p>Recomendamos à Igreja Evangélica Assembleia de Deus - Ministério Moriáh, em Peruíbe/SP, a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de 2009, data de seu batismo em águas.</p>
+            <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam no amor de Cristo, como é de uso e devido aos santos.</p>
+            <p>Certos de Vossa atenção ao exposto, de já agradecemos e rogamos ao Senhor, suas bênçãos sobre vossas vidas.</p>
+        </div>
+        <div class="assinatura">
+            <p><strong>Cachoeira Grande/MA, 06 de janeiro de 2025</strong></p>
+            <p><strong>Pr. Marcos Vinícius S. Costa</strong></p>
+            <p>PRESIDENTE</p>
+            <p>CEADEMA - Convenção Estadual das Assembleias de Deus no Estado do Maranhão</p>
+            <p>REGISTRO CEADEMA Nº 902</p>
+        </div>
+    </div>
 </body>
 </html>
