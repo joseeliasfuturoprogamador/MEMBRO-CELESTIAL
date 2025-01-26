@@ -67,13 +67,18 @@ const compileTemplate = async (templatePath, data) => {
 
 const gerarCarta = async (id) => {
     try {
-        const membro = await User.findById(id);
+        const membro = await User.findById(id).lean();
         if (!membro) throw new Error("Membro não encontrado");
 
         console.log("Membro encontrado", membro)
 
-        membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
-        membro.batismo = new Date(membro.batismo).toLocaleDateString('pt-BR');
+        if(membro.nascimento){
+            membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
+        };
+
+        if(membro.batismo){
+            membro.batismo = new Date(membro.batismo).toLocaleDateString('pt-BR');
+        };
 
 
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');

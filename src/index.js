@@ -8,7 +8,7 @@ connect();
 
 app.use(express.json());
 app.use('/api', userRoutes)
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
     res.send("Servidor rodando!")
 })
 
