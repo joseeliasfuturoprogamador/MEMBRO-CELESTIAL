@@ -76,9 +76,13 @@ const gerarCarta = async (id) => {
             membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
         };
 
-        if(membro.batismo){
-            membro.batismo = new Date(membro.batismo).toLocaleDateString('pt-BR');
-        };
+        const dataBatismo = new Date(membro.dataBatismo);
+        if (isNaN(dataBatismo)) {
+            console.error("Data inválida:", membro.dataBatismo);
+        } else {
+            console.log("Data correta:", dataBatismo.toLocaleDateString());
+        }
+        
 
 
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');

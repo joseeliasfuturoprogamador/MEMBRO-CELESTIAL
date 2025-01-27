@@ -5,37 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carta de Mudança</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine">
+    <style>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        .igreja-info, .corpo-carta, .assinatura {
-            margin-bottom: 20px;
-        }
-        .igreja-info p, .corpo-carta p {
-            text-align: center;
-        }
-        .assinatura {
-            text-align: center;
-            margin-top: 40px;
-        }
-        .assinatura p {
-            margin: 5px 0;
-        }
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+    border: 6px solid #D4A017; /* Moldura dourada */
+}
+
+h1, h2 {
+    text-align: center;
+    color: #0073C6; /* Azul principal */
+}
+
+.igreja-info, .corpo-carta, .assinatura {
+    margin-bottom: 20px;
+}
+
+.igreja-info p, .corpo-carta p {
+    text-align: center;
+    font-size: 16px;
+}
+
+.destaque {
+    font-weight: bold;
+    color: #000; /* Preto para destaques */
+}
+
+.assinatura {
+  font-size: 48px;
+  text-shadow: 4px 4px 4px #aaa;
+    text-align: center;
+    margin-top: 40px;
+    font-family: 'Brush Script MT', serif;
+    font-size: 20px;
+    color: #000;
+}
+
+.assinatura p {
+    margin: 5px 0;
+}
+
+/* Linha vermelha decorativa */
+.detalhe-vermelho {
+    width: 50px;
+    height: 5px;
+    background-color: #D14523;
+    margin: 10px auto;
+}
+
+/* Imagem da igreja */
+.imagem-igreja {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+}
+
     </style>
 </head>
 <body>
@@ -43,11 +81,11 @@
         <div class="igreja-info">
             <h2>Igreja Evangélica Assembleia de Deus</h2>
             <p>Rua do Comércio, nº 90 - Centro, Cachoeira Grande/MA</p>
-            <p>Presidente: Pr. Marcos Vinícius S. Costa</p>
+            <p>Presidente: Pr. Marcos Vinícius S. Costa</p>  
         </div>
         <h1>Carta de Mudança</h1>
         <div class="corpo-carta">
-            <p>Recomendamos à Igreja Evangélica Assembleia de Deus - Ministério Moriáh, em Peruíbe/SP, a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de 2009, data de seu batismo em águas.</p>
+            <p>Recomendamos à Igreja Evangélica Assembleia de Deus - Ministério Moriáh, em Peruíbe/SP, a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de <strong>{{batismo}}</strong>, data de seu batismo em águas.</p>
             <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam no amor de Cristo, como é de uso e devido aos santos.</p>
             <p>Certos de Vossa atenção ao exposto, de já agradecemos e rogamos ao Senhor, suas bênçãos sobre vossas vidas.</p>
         </div>
