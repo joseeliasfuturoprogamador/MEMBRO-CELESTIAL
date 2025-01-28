@@ -1,101 +1,105 @@
 {{! Carta de Mudança - Template Handlebars }}
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carta de Mudança</title>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
+    <title>Carta de Mudança</title>   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <style>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    padding: 20px;
-    background-color: #f9f9f9;
-}
-
-.container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: auto;
-    border: 6px solid #D4A017; /* Moldura dourada */
-}
-
-h1, h2 {
-    text-align: center;
-    color: #0073C6; /* Azul principal */
-}
-
-.igreja-info, .corpo-carta, .assinatura {
-    margin-bottom: 20px;
-}
-
-.igreja-info p, .corpo-carta p {
-    text-align: center;
-    font-size: 16px;
-}
-
-.destaque {
-    font-weight: bold;
-    color: #000; /* Preto para destaques */
-}
-
-.assinatura {
-  font-size: 48px;
-  text-shadow: 4px 4px 4px #aaa;
-    text-align: center;
-    margin-top: 40px;
-    font-family: 'Brush Script MT', serif;
-    font-size: 20px;
-    color: #000;
-}
-
-.assinatura p {
-    margin: 5px 0;
-}
-
-/* Linha vermelha decorativa */
-.detalhe-vermelho {
-    width: 50px;
-    height: 5px;
-    background-color: #D14523;
-    margin: 10px auto;
-}
-
-/* Imagem da igreja */
-.imagem-igreja {
-    display: block;
-    margin: 20px auto;
-    max-width: 100%;
-}
-
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border: 10px solid #d4af37;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 120px;
+        }
+        .header h1 {
+            font-size: 22px;
+            color: #003366;
+            font-weight: bold;
+        }
+        .title {
+            text-align: center;
+            font-size: 26px;
+            color: #ffffff;
+            background: #0073cf;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .content {
+            font-size: 18px;
+            text-align: justify;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .signature {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 18px;
+        }
+        .signature img {
+            width: 180px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 16px;
+            color: #003366;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 2px solid #d4af37;
+        }
+        .decorative {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: url('decorative-corner.png') no-repeat;
+            background-size: contain;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="igreja-info">
-            <h2>Igreja Evangélica Assembleia de Deus</h2>
-            <p>Rua do Comércio, nº 90 - Centro, Cachoeira Grande/MA</p>
-            <p>Presidente: Pr. Marcos Vinícius S. Costa</p>  
+        <div class="header">
+            <img src="logo.png" alt="Logo da Igreja">
+            <h1>Igreja Evangélica Assembleia de Deus em Cachoeira Grande/ Maranhão</h1>
         </div>
-        <h1>Carta de Mudança</h1>
-        <div class="corpo-carta">
-            <p>Recomendamos à Igreja Evangélica Assembleia de Deus - Ministério Moriáh, em Peruíbe/SP, a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de <strong>{{batismo}}</strong>, data de seu batismo em águas.</p>
-            <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam no amor de Cristo, como é de uso e devido aos santos.</p>
-            <p>Certos de Vossa atenção ao exposto, de já agradecemos e rogamos ao Senhor, suas bênçãos sobre vossas vidas.</p>
+        <div class="title">Carta de Mudança</div>
+        <div class="content">
+            <p>Recomendamos à Igreja Evangélica <strong>Assembleia de Deus - Ministério Moriah</strong>, em Peruíbe/SP, a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de 2009, data de seu batismo em águas.</p>
+            <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam no amor de Cristo, como de uso e devido aos santos.</p>
+            <p>Cachoeira Grande/MA, <strong>06 de janeiro de 2025</strong>.</p>
         </div>
-        <div class="assinatura">
-            <p><strong>Cachoeira Grande/MA, 06 de janeiro de 2025</strong></p>
-            <p><strong>Pr. Marcos Vinícius S. Costa</strong></p>
-            <p>PRESIDENTE</p>
-            <p>CEADEMA - Convenção Estadual das Assembleias de Deus no Estado do Maranhão</p>
-            <p>REGISTRO CEADEMA Nº 902</p>
+        <div class="signature">
+            <p>Fraternalmente,</p>
+            <img src="assinatura.png" alt="Assinatura do Pastor">
+            <p><strong>Pr. Marcos Vinícius S. Costa</strong><br>PRESIDENTE</p>
+        </div>
+        <div class="footer">
+            CEADAMA - Convenção Estadual das Assembleias de Deus no Estado do Maranhão.
         </div>
     </div>
 </body>
 </html>
+
+ 
