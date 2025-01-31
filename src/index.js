@@ -6,6 +6,8 @@ const app = express();
 
 connect();
 
+app.use('/imagens', express.static('src/imagens'));
+app.use(express.static('public'));
 app.use(express.json());
 app.use('/api', userRoutes)
 app.get("/", (_req, res) => {
