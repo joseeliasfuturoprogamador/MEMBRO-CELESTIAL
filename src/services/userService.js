@@ -2,6 +2,7 @@ const User = require('../models/UsuarioSchema');
 const path = require('path');
 const pdf = require('html-pdf');
 const { create } = require('express-handlebars');
+const fs = require('fs');
 
 // Configuração do Handlebars
 const hbs = create({
@@ -9,11 +10,20 @@ const hbs = create({
     defaultLayout: false,
 });
 
+// Função genérica para tratamento de erros
+const handleError = (error, customMessage) => {
+    console.error(`${customMessage}:`, error.message);
+    throw new Error(`${customMessage}: ${error.message}`);
+};
+
 const criacaoDeUsuario = async (userdata) => {
     try {
+        if (!userdata.nome || !userdata.email) {
+            throw new Error('Nome e e-mail são obrigatórios.');
+        }
         return await User.create(userdata);
     } catch (error) {
-        throw new Error('Erro ao criar usuário: ' + error.message);
+        handleError(error, 'Erro ao criar usuário');
     }
 };
 
@@ -21,7 +31,7 @@ const listarUsuarios = async () => {
     try {
         return await User.find();
     } catch (error) {
-        throw new Error('Erro ao listar usuários: ' + error.message);
+        handleError(error, 'Erro ao listar usuários');
     }
 };
 
@@ -31,7 +41,7 @@ const listarPorId = async (id) => {
         if (!user) throw new Error('Usuário não encontrado');
         return user;
     } catch (error) {
-        throw new Error(error.message);
+        handleError(error, 'Erro ao buscar usuário');
     }
 };
 
@@ -41,7 +51,7 @@ const atualizaUsuarioPorId = async (id, updateData) => {
         if (!user) throw new Error('Usuário não encontrado');
         return user;
     } catch (error) {
-        throw new Error(error.message);
+        handleError(error, 'Erro ao atualizar usuário');
     }
 };
 
@@ -51,17 +61,17 @@ const deletarPorId = async (id) => {
         if (!user) throw new Error("Usuário não encontrado");
         return user;
     } catch (error) {
-        throw new Error(error.message);
+        handleError(error, 'Erro ao deletar usuário');
     }
 };
 
 const compileTemplate = async (templatePath, data) => {
     try {
-        const templateFile = require('fs').readFileSync(templatePath, 'utf-8');
+        const templateFile = fs.readFileSync(templatePath, 'utf-8');
         const template = hbs.handlebars.compile(templateFile);
         return template(data);
     } catch (error) {
-        throw new Error('Erro ao compilar template: ' + error.message);
+        handleError(error, 'Erro ao compilar template');
     }
 };
 
@@ -70,23 +80,15 @@ const gerarCarta = async (id) => {
         const membro = await User.findById(id).lean();
         if (!membro) throw new Error("Membro não encontrado");
 
-        console.log("Membro encontrado", membro)
-
-        if(membro.nascimento){
+        if (membro.nascimento) {
             membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
-        };
-
-        const dataBatismo = new Date(membro.dataBatismo);
-        if (isNaN(dataBatismo)) {
-            console.error("Data inválida:", membro.dataBatismo);
-        } else {
-            console.log("Data correta:", dataBatismo.toLocaleDateString());
         }
-        
 
+        const logoPath = path.join(__dirname, '../logo.png');
+        const logoBase64 = fs.readFileSync(logoPath, 'base64');
+        membro.logoBase64 = `data:image/png;base64,${logoBase64}`;
 
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');
-
         const html = await compileTemplate(templatePath, membro);
 
         return new Promise((resolve, reject) => {
@@ -97,7 +99,7 @@ const gerarCarta = async (id) => {
         });
 
     } catch (error) {
-        throw new Error("Erro ao gerar a carta" + error.message);
+        throw new Error("Erro ao gerar a carta: " + error.message);
     }
 };
 
