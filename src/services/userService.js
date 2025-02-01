@@ -84,9 +84,10 @@ const gerarCarta = async (id) => {
             membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
         }
 
-        const logoPath = path.join(__dirname, '../logo.png');
+        const logoPath = path.resolve(__dirname, '../imagens/logo.png');  // Alterando para o formato .png
         const logoBase64 = fs.readFileSync(logoPath, 'base64');
-        membro.logoBase64 = `data:image/png;base64,${logoBase64}`;
+        membro.logoBase64 = `data:image/png;base64,${logoBase64}`;  // Alterando para 'image/png'
+        
 
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');
         const html = await compileTemplate(templatePath, membro);

@@ -1,10 +1,10 @@
-
 {{! Carta de Mudança - Template Handlebars }}
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carta de Mudança</title>   
+    <title>Carta de Mudança</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <style>
         body {
@@ -13,6 +13,7 @@
             padding: 0;
             background: #f8f8f8;
         }
+
         .container {
             width: 80%;
             margin: 20px auto;
@@ -22,18 +23,22 @@
             position: relative;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .header img {
             width: 120px;
         }
+
         .header h1 {
             font-size: 22px;
             color: #003366;
             font-weight: bold;
         }
+
         .title {
             text-align: center;
             font-size: 26px;
@@ -43,6 +48,7 @@
             font-weight: bold;
             border-radius: 5px;
         }
+
         .content {
             font-size: 18px;
             text-align: justify;
@@ -50,14 +56,17 @@
             line-height: 1.6;
             color: #333;
         }
+
         .signature {
             text-align: center;
             margin-top: 40px;
             font-size: 18px;
         }
+
         .signature img {
             width: 180px;
         }
+
         .footer {
             text-align: center;
             font-size: 16px;
@@ -67,6 +76,7 @@
             padding: 10px;
             border-top: 2px solid #d4af37;
         }
+
         .decorative {
             position: absolute;
             top: 0;
@@ -78,16 +88,20 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-             <img src="{{logoBase64}}" alt="Logo da Igreja">
+            <img src="{{logoBase64}}" alt="Logo da Igreja">
             <h1>Igreja Evangélica Assembleia de Deus em Cachoeira Grande/ Maranhão</h1>
         </div>
         <div class="title">Carta de Mudança</div>
         <div class="content">
-            <p>Recomendamos à Igreja Evangélica <strong>Assembleia de Deus - Ministério Moriah</strong>, em Peruíbe/SP, a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de 2009, data de seu batismo em águas.</p>
-            <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam no amor de Cristo, como de uso e devido aos santos.</p>
+            <p>Recomendamos à Igreja Evangélica <strong>Assembleia de Deus - Ministério Moriah</strong>, em Peruíbe/SP,
+                a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de 2009, data de seu
+                batismo em águas.</p>
+            <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam
+                no amor de Cristo, como de uso e devido aos santos.</p>
             <p>Cachoeira Grande/MA, <strong>06 de janeiro de 2025</strong>.</p>
         </div>
         <div class="signature">
@@ -100,5 +114,5 @@
         </div>
     </div>
 </body>
-</html>
 
+</html>
