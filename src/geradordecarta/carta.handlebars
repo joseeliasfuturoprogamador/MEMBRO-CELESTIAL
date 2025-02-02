@@ -75,16 +75,14 @@
             margin-top: 20px;
             padding: 10px;
             border-top: 2px solid #d4af37;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .decorative {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .footer img {
             width: 100px;
-            height: 100px;
-            background: url('decorative-corner.png') no-repeat;
-            background-size: contain;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -98,7 +96,7 @@
         <div class="title">Carta de Mudança</div>
         <div class="content">
             <p>Recomendamos à Igreja Evangélica <strong>Assembleia de Deus - Ministério Moriah</strong>, em Peruíbe/SP,
-                a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde dezembro de 2009, data de seu
+                a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde <strong>{{convencao}}</strong>, data de seu
                 batismo em águas.</p>
             <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam
                 no amor de Cristo, como de uso e devido aos santos.</p>
@@ -110,7 +108,8 @@
             <p><strong>Pr. Marcos Vinícius S. Costa</strong><br>PRESIDENTE</p>
         </div>
         <div class="footer">
-            CEADAMA - Convenção Estadual das Assembleias de Deus no Estado do Maranhão.
+            <img src="{{logobase64}}" alt="Logo CEADEMA">
+            <p>CEADEMA - Convenção Estadual das Assembleias de Deus no Estado do Maranhão.</p>
         </div>
     </div>
 </body>

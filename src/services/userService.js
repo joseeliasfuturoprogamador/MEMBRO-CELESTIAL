@@ -88,6 +88,11 @@ const gerarCarta = async (id) => {
         const logoBase64 = fs.readFileSync(logoPath, 'base64');
         membro.logoBase64 = `data:image/png;base64,${logoBase64}`;  // Alterando para 'image/png'
         
+        const ceadema = path.resolve(__dirname, '../imagens/OIP.jpg');  // Alterando para o formato .png
+        const ceademaBase64 = fs.readFileSync(ceadema, 'base64');
+        membro.ceademaBase64 = `data:image/png;base64,${ceademaBase64}`;  // Alterando para 'image/png'
+        
+    
 
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');
         const html = await compileTemplate(templatePath, membro);
