@@ -70,7 +70,7 @@
         .footer {
             text-align: center;
             font-size: 16px;
-            color: #003366;
+            color: #333;
             font-weight: bold;
             margin-top: 20px;
             padding: 10px;
@@ -82,7 +82,11 @@
 
         .footer img {
             width: 100px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #333;
         }
     </style>
 </head>
@@ -91,24 +95,30 @@
     <div class="container">
         <div class="header">
             <img src="{{logoBase64}}" alt="Logo da Igreja">
-            <h1>Igreja Evangélica Assembleia de Deus em Cachoeira Grande/ Maranhão</h1>
+            <h1>Igreja Evangélica Assembleia de Deus <p> em Cachoeira Grande/ Maranhão</p>
+            </h1>
+            <div class="subtitle">
+                <p>Rua do Comércio, nº 90 - Centro. Cachoeira Grande/ MA. </p>
+                <p>Presidente: Pr. Marcos Vinícius S. Costa.</p>
+            </div>
         </div>
         <div class="title">Carta de Mudança</div>
         <div class="content">
             <p>Recomendamos à Igreja Evangélica <strong>Assembleia de Deus - Ministério Moriah</strong>, em Peruíbe/SP,
-                a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde <strong>{{convencao}}</strong>, data de seu
-                batismo em águas.</p>
-            <p>E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam
-                no amor de Cristo, como de uso e devido aos santos.</p>
+                a irmã(o) <strong>{{nome}}</strong>, membro da igreja acima citada desde <strong>{{convencao}}</strong>,
+                data de seu
+                batismo em águas.
+            E por se achar em plena comunhão com esta congregação, em obediência e temor, solicitamos que a recebam
+            no amor de Cristo, como de uso e devido aos santos.</p>
             <p>Cachoeira Grande/MA, <strong>06 de janeiro de 2025</strong>.</p>
         </div>
         <div class="signature">
-            <p>Fraternalmente,</p>
-            <img src="assinatura.png" alt="Assinatura do Pastor">
+            <p>Fraternalmente</p>
+            <p>_____________________</p>
             <p><strong>Pr. Marcos Vinícius S. Costa</strong><br>PRESIDENTE</p>
         </div>
         <div class="footer">
-            <img src="{{logobase64}}" alt="Logo CEADEMA">
+            <img src="{{ceademaBase64}}" alt="Logo CEADEMA" style="width: 120px; display: block; margin: auto;">
             <p>CEADEMA - Convenção Estadual das Assembleias de Deus no Estado do Maranhão.</p>
         </div>
     </div>

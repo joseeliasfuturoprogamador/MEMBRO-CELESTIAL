@@ -90,7 +90,7 @@ const gerarCarta = async (id) => {
         
         const ceadema = path.resolve(__dirname, '../imagens/OIP.jpg');  // Alterando para o formato .png
         const ceademaBase64 = fs.readFileSync(ceadema, 'base64');
-        membro.ceademaBase64 = `data:image/png;base64,${ceademaBase64}`;  // Alterando para 'image/png'
+        membro.ceademaBase64 = `data:image/jpg;base64,${ceademaBase64}`;  // Alterando para 'image/png'
         
     
 
