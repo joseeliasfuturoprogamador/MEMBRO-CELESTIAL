@@ -13,68 +13,72 @@ const hbs = create({
 // Função genérica para tratamento de erros
 const handleError = (error, customMessage) => {
     console.error(`${customMessage}:`, error.message);
-    throw new Error(`${customMessage}: ${error.message}`);
+    return new Error(`${customMessage}: ${error.message}`);
 };
 
-const criacaoDeUsuario = async (userdata) => {
+// Criar Usuário
+const criarUsuario = async (userData) => {
     try {
-        if (!userdata.nome || !userdata.email) {
-            throw new Error('Nome e e-mail são obrigatórios.');
-        }
-        return await User.create(userdata);
+        return await User.create(userData);
     } catch (error) {
-        handleError(error, 'Erro ao criar usuário');
+        throw handleError(error, 'Erro ao criar usuário');
     }
 };
 
+// Listar todos os usuários
 const listarUsuarios = async () => {
     try {
         return await User.find();
     } catch (error) {
-        handleError(error, 'Erro ao listar usuários');
+        throw handleError(error, 'Erro ao listar usuários');
     }
 };
 
+// Listar usuário por ID
 const listarPorId = async (id) => {
     try {
         const user = await User.findById(id);
         if (!user) throw new Error('Usuário não encontrado');
         return user;
     } catch (error) {
-        handleError(error, 'Erro ao buscar usuário');
+        throw handleError(error, 'Erro ao buscar usuário');
     }
 };
 
+// Atualizar usuário por ID
 const atualizaUsuarioPorId = async (id, updateData) => {
     try {
         const user = await User.findByIdAndUpdate(id, updateData, { new: true });
         if (!user) throw new Error('Usuário não encontrado');
         return user;
     } catch (error) {
-        handleError(error, 'Erro ao atualizar usuário');
+        throw handleError(error, 'Erro ao atualizar usuário');
     }
 };
 
+// Deletar usuário por ID
 const deletarPorId = async (id) => {
     try {
         const user = await User.findByIdAndDelete(id);
         if (!user) throw new Error("Usuário não encontrado");
         return user;
     } catch (error) {
-        handleError(error, 'Erro ao deletar usuário');
+        throw handleError(error, 'Erro ao deletar usuário');
     }
 };
 
+// Compilar Template Handlebars
 const compileTemplate = async (templatePath, data) => {
     try {
         const templateFile = fs.readFileSync(templatePath, 'utf-8');
         const template = hbs.handlebars.compile(templateFile);
         return template(data);
     } catch (error) {
-        handleError(error, 'Erro ao compilar template');
+        throw handleError(error, 'Erro ao compilar template');
     }
 };
 
+// Gerar Carta em PDF
 const gerarCarta = async (id) => {
     try {
         const membro = await User.findById(id).lean();
@@ -84,16 +88,14 @@ const gerarCarta = async (id) => {
             membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
         }
 
-        const logoPath = path.resolve(__dirname, '../imagens/logo.png');  // Alterando para o formato .png
-        const logoBase64 = fs.readFileSync(logoPath, 'base64');
-        membro.logoBase64 = `data:image/png;base64,${logoBase64}`;  // Alterando para 'image/png'
+        // Carregar imagens e converter para Base64
+        const logoPath = path.resolve(__dirname, '../imagens/logo.png');
+        const ceademaPath = path.resolve(__dirname, '../imagens/OIP.jpg');
         
-        const ceadema = path.resolve(__dirname, '../imagens/OIP.jpg');  // Alterando para o formato .png
-        const ceademaBase64 = fs.readFileSync(ceadema, 'base64');
-        membro.ceademaBase64 = `data:image/jpg;base64,${ceademaBase64}`;  // Alterando para 'image/png'
-        
-    
+        membro.logoBase64 = `data:image/png;base64,${fs.readFileSync(logoPath, 'base64')}`;
+        membro.ceademaBase64 = `data:image/jpg;base64,${fs.readFileSync(ceademaPath, 'base64')}`;
 
+        // Compilar HTML do template
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');
         const html = await compileTemplate(templatePath, membro);
 
@@ -105,12 +107,13 @@ const gerarCarta = async (id) => {
         });
 
     } catch (error) {
-        throw new Error("Erro ao gerar a carta: " + error.message);
+        throw handleError(error, "Erro ao gerar a carta");
     }
 };
 
+// Exportar os serviços
 module.exports = {
-    criacaoDeUsuario,
+    criarUsuario,
     listarUsuarios,
     listarPorId,
     atualizaUsuarioPorId,

@@ -1,14 +1,17 @@
 const express = require("express");
 const connect = require("./database/connection");
-const userRoutes = require('./Routes/useRoutes'); // Corrigido o nome do arquivo
-const { engine } = require('express-handlebars'); // Atualizado para usar a função engine
+const userRoutes = require('./Routes/useRoutes');
+const { engine } = require('express-handlebars');
 const path = require('path');
+const cors = require('cors'); // Importa o cors corretamente
 
-const app = express();
+const app = express(); // Criação da instância do app
+
+app.use(cors()); // Coloca a configuração do CORS após a instância do app
 
 connect();
 
-app.engine('handlebars', engine()); // Atualizado para usar a função engine
+app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'src/templates'));
 
