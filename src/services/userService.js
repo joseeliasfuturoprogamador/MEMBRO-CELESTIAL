@@ -84,9 +84,21 @@ const gerarCarta = async (id) => {
         const membro = await User.findById(id).lean();
         if (!membro) throw new Error("Membro não encontrado");
 
-        if (membro.nascimento) {
-            membro.nascimento = new Date(membro.nascimento).toLocaleDateString('pt-BR');
+        // Formatar data de batismo (se houver)
+        if (membro.batismo) {
+            membro.batismo = new Date(membro.nascimento).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
         }
+
+        // Gerar data atual formatada
+        const dataAtual = new Date().toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
 
         // Carregar imagens e converter para Base64
         const logoPath = path.resolve(__dirname, '../imagens/logo.png');
@@ -94,6 +106,9 @@ const gerarCarta = async (id) => {
         
         membro.logoBase64 = `data:image/png;base64,${fs.readFileSync(logoPath, 'base64')}`;
         membro.ceademaBase64 = `data:image/jpg;base64,${fs.readFileSync(ceademaPath, 'base64')}`;
+
+        // Adicionar a data formatada ao objeto `membro`
+        membro.dataAtual = dataAtual;
 
         // Compilar HTML do template
         const templatePath = path.join(__dirname, '../geradordecarta/carta.handlebars');
@@ -110,7 +125,6 @@ const gerarCarta = async (id) => {
         throw handleError(error, "Erro ao gerar a carta");
     }
 };
-
 // Exportar os serviços
 module.exports = {
     criarUsuario,

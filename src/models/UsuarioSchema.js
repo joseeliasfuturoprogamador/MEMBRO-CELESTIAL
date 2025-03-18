@@ -11,7 +11,7 @@ const usuarioSchema = new mongoose.Schema({
     area: { type: String, required: true },
     congregacao: { type: String, required: true },
     dirigente: { type: String, required: true },
-    conversão: { type: Date, required: true },
+    conversao: { type: Date, required: true },
     funcao: { type: String, required: true },
     discipulado: { type: String, required: true },
     batismo: { type: Date, required: true },

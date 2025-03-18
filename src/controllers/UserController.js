@@ -3,8 +3,8 @@ const userService = require('../services/userService');
 const User = require('../models/UsuarioSchema');
 
 const criarUsuario = async (req, res) => {
-    const { nome, nascimento, endereco, bairro, filiacao, estadocivil, cpf, area, congregacao, dirigente, conversão, funcao, discipulado, batismo } = req.body;
-    if (!nome || !nascimento || !endereco || !bairro || !filiacao || !estadocivil || !cpf || !area || !congregacao || !dirigente || !conversão || !funcao || !discipulado || !batismo) {
+    const { nome, nascimento, endereco, bairro, filiacao, estadocivil, cpf, area, congregacao, dirigente, conversao, funcao, discipulado, batismo } = req.body;
+    if (!nome || !nascimento || !endereco || !bairro || !filiacao || !estadocivil || !cpf || !area || !congregacao || !dirigente || !conversao || !funcao || !discipulado || !batismo) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios" });
     }
     try {
