@@ -1,108 +1,117 @@
 const mongoose = require('mongoose');
 const userService = require('../services/userService');
-const User = require('../models/UsuarioSchema');
 
+// Função auxiliar para obter o ID da igreja
+const getIgrejaId = (req) => {
+  return req.headers['x-igreja-id'];
+};
+
+// Criar Usuário
 const criarUsuario = async (req, res) => {
-    const { nome, nascimento, endereco, bairro, filiacao, estadocivil, cpf, area, congregacao, dirigente, conversao, funcao, discipulado, batismo } = req.body;
-    if (!nome || !nascimento || !endereco || !bairro || !filiacao || !estadocivil || !cpf || !area || !congregacao || !dirigente || !conversao || !funcao || !discipulado || !batismo) {
-        return res.status(400).json({ message: "Todos os campos são obrigatórios" });
-    }
-    try {
-        const user = await userService.criarUsuario(req.body);
-        res.status(201).json({ message: "Usuário criado com sucesso", user });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao criar o Usuário" });
-    }
+  const igreja = getIgrejaId(req);
+  if (!igreja) {
+    return res.status(400).json({ message: "Cabeçalho 'X-Igreja-Id' é obrigatório" });
+  }
+
+  const userData = { ...req.body, igreja };
+
+  try {
+    const user = await userService.criarUsuario(userData);
+    res.status(201).json({ message: "Usuário criado com sucesso", user });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao criar o usuário", error: error.message });
+  }
 };
 
+// Listar todos os usuários
 const listarUsuarios = async (req, res) => {
-    try {
-        const users = await userService.listarUsuarios();
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ message: "Ocorreu um erro ao listar Usuários" });
-    }
+  const igreja = getIgrejaId(req);
+  if (!igreja) {
+    return res.status(400).json({ message: "Cabeçalho 'X-Igreja-Id' é obrigatório" });
+  }
+
+  try {
+    const users = await userService.listarUsuarios(igreja);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao listar usuários", error: error.message });
+  }
 };
 
+// Listar usuário por ID
 const listarPorId = async (req, res) => {
-    try {
-        const id = req.params.id;
+  const id = req.params.id;
+  const igreja = getIgrejaId(req);
 
-        // Verifique se o ID é válido
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "ID inválido" });
-        }
+  if (!igreja) return res.status(400).json({ message: "Cabeçalho 'X-Igreja-Id' é obrigatório" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "ID inválido" });
 
-        const user = await userService.listarPorId(id);
-        if (!user) {
-            return res.status(404).json({ message: "Usuário não encontrado" });
-        }
-
-        res.status(200).json(user);
-    } catch (error) {
-        console.error('Erro ao buscar usuário:', error);
-        res.status(500).json({ message: "Erro ao listar Usuário por Id" });
-    }
+  try {
+    const user = await userService.listarPorId(id, igreja);
+    if (!user) return res.status(404).json({ message: "Usuário não encontrado" });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar usuário", error: error.message });
+  }
 };
 
-const AtualizarPorId = async (req, res) => {
-    try {
-        const id = req.params.id;
+// Atualizar usuário
+const atualizarPorId = async (req, res) => {
+  const id = req.params.id;
+  const igreja = getIgrejaId(req);
 
-        // Verifique se o ID é válido!
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "ID inválido" });
-        }
+  if (!igreja) return res.status(400).json({ message: "Cabeçalho 'X-Igreja-Id' é obrigatório" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "ID inválido" });
 
-        const user = await userService.atualizaUsuarioPorId(id, req.body, { new: true });
-        if (!user) {
-            return res.status(404).json({ message: "Usuário não encontrado para atualização" });
-        }
-
-        res.status(200).json({ message: "Usuário Atualizado com sucesso!", user });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+  try {
+    const user = await userService.atualizaUsuarioPorId(id, req.body, igreja);
+    if (!user) return res.status(404).json({ message: "Usuário não encontrado para atualização" });
+    res.status(200).json({ message: "Usuário atualizado com sucesso", user });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao atualizar usuário", error: error.message });
+  }
 };
 
-const DeletarPorId = async (req, res) => {
-    try {
-        const id = req.params.id;
+// Deletar usuário
+const deletarPorId = async (req, res) => {
+  const id = req.params.id;
+  const igreja = getIgrejaId(req);
 
-        // Verifique se o ID é válido
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "ID inválido" });
-        }
+  if (!igreja) return res.status(400).json({ message: "Cabeçalho 'X-Igreja-Id' é obrigatório" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "ID inválido" });
 
-        const user = await userService.deletarPorId(id);
-        if (!user) {
-            return res.status(404).json({ message: "Usuário não encontrado para deletar" });
-        }
-
-        res.status(200).json({ message: "Usuário deletado com sucesso" });
-    } catch (error) {
-        res.status(500).json({ message: "Erro ao deletar Usuário" });
-    }
+  try {
+    const user = await userService.deletarPorId(id, igreja);
+    if (!user) return res.status(404).json({ message: "Usuário não encontrado para deletar" });
+    res.status(200).json({ message: "Usuário deletado com sucesso" });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao deletar usuário", error: error.message });
+  }
 };
 
+// Gerar carta
 const gerarCarta = async (req, res) => {
-    try {
-        const pdfBuffer = await userService.gerarCarta(req.params.id);
-        res.set({
-            'Content-Type': 'application/pdf',
-            'Content-Disposition': 'attachment; filename="carta.pdf"',
-        });
-        res.send(pdfBuffer);
-    } catch (error) {
-        res.status(500).json({ sucesso: false, mensagem: error.message });
-    }
+  const igreja = getIgrejaId(req);
+
+  if (!igreja) return res.status(400).json({ message: "Cabeçalho 'X-Igreja-Id' é obrigatório" });
+
+  try {
+    const pdfBuffer = await userService.gerarCarta(req.params.id, igreja);
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="carta.pdf"',
+    });
+    res.send(pdfBuffer);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao gerar carta", error: error.message });
+  }
 };
 
 module.exports = {
-    criarUsuario,
-    listarUsuarios,
-    listarPorId,
-    AtualizarPorId,
-    DeletarPorId,
-    gerarCarta
+  criarUsuario,
+  listarUsuarios,
+  listarPorId,
+  atualizarPorId,
+  deletarPorId,
+  gerarCarta,
 };
