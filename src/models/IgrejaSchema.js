@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const igrejaSchema = new mongoose.Schema({
   nome: { type: String, required: true, unique: true },
@@ -12,15 +11,6 @@ const igrejaSchema = new mongoose.Schema({
   codigoSenhaResetExpira: { type: Date },
 }, { timestamps: true });
 
-igrejaSchema.pre('save', async function(next) {
-  if (!this.isModified('senha')) return next();
-  const salt = await bcrypt.genSalt(10);
-  this.senha = await bcrypt.hash(this.senha, salt);
-  next();
-});
-
-igrejaSchema.methods.comparePassword = async function(senhaRecebida) {
-  return await bcrypt.compare(senhaRecebida, this.senha);
-};
+// REMOVIDO pre('save') para não aplicar hash automático
 
 module.exports = { schema: igrejaSchema };

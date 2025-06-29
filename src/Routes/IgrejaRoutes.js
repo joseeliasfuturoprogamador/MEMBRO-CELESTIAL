@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const igrejaController = require('../controllers/igrejaController');
+const igrejaController = require('../controllers/IgrejaController');
 
 router.post('/cadastrar', igrejaController.cadastrarIgreja);
 router.post('/confirmar', igrejaController.confirmarCadastro);
