@@ -1,6 +1,7 @@
 const express = require("express");
 const userRoutes = require('./Routes/useRoutes');
 const igrejaRoutes = require('./Routes/IgrejaRoutes');
+const dizimoRoutes = require('./Routes/dizimo.Routes');
 const { engine } = require('express-handlebars');
 const path = require('path');
 const cors = require('cors');
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api', igrejaRoutes);
+app.use('/api', dizimoRoutes);
 
 app.get("/", (_req, res) => {
     res.send("Servidor rodando!");

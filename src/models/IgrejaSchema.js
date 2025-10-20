@@ -9,6 +9,14 @@ const igrejaSchema = new mongoose.Schema({
   codigoConfirmacao: { type: String },
   codigoSenhaReset: { type: String },
   codigoSenhaResetExpira: { type: Date },
+
+  // NOVOS CAMPOS PARA CARTA (opcionais)
+  logoIgreja: { type: String },      // caminho ou URL da logo da própria igreja
+  logoConvencao: { type: String },   // caminho ou URL da logo da convenção
+  pastorPresidente: { type: String },
+  endereco: { type: String },
+  cidade: { type: String },
+  uf: { type: String },
 }, { timestamps: true });
 
 // REMOVIDO pre('save') para não aplicar hash automático
