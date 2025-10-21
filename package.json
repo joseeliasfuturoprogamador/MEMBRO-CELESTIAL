@@ -1,11 +1,11 @@
 {
-  "name": "projeto-membro-celestiai",
+  "name": "projeto-membro-celestial",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "start": "node src/index.js",
-  "dev": "nodemon src/index.js"
-},
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -18,9 +18,12 @@
     "express-handlebars": "^8.0.1",
     "html-pdf": "^3.0.1",
     "jsonwebtoken": "^9.0.2",
-    "mogodb": "^0.0.1-security",
     "mongoose": "^8.15.1",
     "nodemailer": "^7.0.3",
+    "mongodb": "^6.0.6"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.9"
   }
 }
+
