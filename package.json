@@ -1,15 +1,16 @@
 {
   "name": "projeto-membro-celestial",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "José Elias",
   "license": "ISC",
-  "description": "",
+  "description": "Backend do sistema Membro Celestial",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
@@ -26,4 +27,3 @@
     "nodemon": "^3.1.9"
   }
 }
-

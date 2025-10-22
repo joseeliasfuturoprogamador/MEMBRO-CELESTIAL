@@ -10,25 +10,33 @@ const app = express();
 
 app.use(cors());
 
+// Configuração do Handlebars
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'src/templates'));
 
+// Configuração de arquivos estáticos e JSON
 app.use(express.static('public'));
 app.use(express.json());
+
+// Rotas principais
 app.use('/api', userRoutes);
 app.use('/api', igrejaRoutes);
 app.use('/api', dizimoRoutes);
 
+// Rota inicial (teste)
 app.get("/", (_req, res) => {
-    res.send("Servidor rodando!");
+  res.send("Servidor rodando!");
 });
 
+// Middleware de erro
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Algo deu errado!');
+  console.error(err.stack);
+  res.status(500).send('Algo deu errado!');
 });
 
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+// ✅ PORTA DINÂMICA PARA DEPLOY
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
