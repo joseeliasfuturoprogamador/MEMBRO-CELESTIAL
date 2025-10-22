@@ -8,7 +8,8 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
+
 
 // Configuração do Handlebars
 app.engine('handlebars', engine());
