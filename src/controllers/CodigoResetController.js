@@ -1,6 +1,6 @@
 const Igreja = require('../models/IgrejaSchema');
 const bcrypt = require('bcrypt');
-
+const { enviarCodigoEmail } = require('../utils/emailUtils'); // ✅ Import corrigido
 
 // Gera código numérico aleatório
 function gerarCodigo(tamanho = 6) {
@@ -23,10 +23,13 @@ const cadastrarIgreja = async (req, res) => {
     const dbName = `igreja_${nome.toLowerCase().replace(/\s+/g, '')}`;
     const codigoConfirmacao = gerarCodigo();
 
+    // Hash da senha
+    const senhaHash = await bcrypt.hash(senha, 10);
+
     const novaIgreja = new Igreja({
       nome,
       email,
-      senha,
+      senha: senhaHash, // ✅ Salva a senha com hash
       dbName,
       codigoConfirmacao,
       confirmado: false,
@@ -34,6 +37,7 @@ const cadastrarIgreja = async (req, res) => {
 
     await novaIgreja.save();
 
+    // Envia código de confirmação por e-mail
     await enviarCodigoEmail(email, codigoConfirmacao, 'Código de confirmação do cadastro');
 
     return res.status(201).json({ message: 'Igreja cadastrada! Confirme seu cadastro pelo código enviado no email.' });
@@ -62,7 +66,10 @@ const confirmarCadastro = async (req, res) => {
     igreja.codigoConfirmacao = null;
     await igreja.save();
 
-    return res.status(200).json({ message: 'Cadastro confirmado com sucesso!' });
+    return res.status(200).json({ 
+      message: 'Cadastro confirmado com sucesso!',
+      idIgreja: igreja._id.toString()
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Erro ao confirmar cadastro' });
@@ -91,7 +98,11 @@ const loginIgreja = async (req, res) => {
       return res.status(400).json({ message: 'Credenciais inválidas' });
     }
 
-    return res.status(200).json({ message: 'Login realizado com sucesso!', igrejaId: igreja._id, dbName: igreja.dbName });
+    return res.status(200).json({ 
+      message: 'Login realizado com sucesso!', 
+      igrejaId: igreja._id, 
+      dbName: igreja.dbName 
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Erro ao fazer login' });
@@ -110,7 +121,6 @@ const solicitarResetSenha = async (req, res) => {
     const codigoSenhaReset = gerarCodigo();
     igreja.codigoSenhaReset = codigoSenhaReset;
     igreja.codigoSenhaResetExpira = Date.now() + 3600000; // 1 hora
-
     await igreja.save();
 
     await enviarCodigoEmail(email, codigoSenhaReset, 'Código para redefinir senha');
@@ -146,7 +156,8 @@ const redefinirSenha = async (req, res) => {
       return res.status(400).json({ message: 'Código expirado. Solicite um novo.' });
     }
 
-    igreja.senha = novaSenha;
+    const novaSenhaHash = await bcrypt.hash(novaSenha, 10); // ✅ Hash da nova senha
+    igreja.senha = novaSenhaHash;
     igreja.codigoSenhaReset = null;
     igreja.codigoSenhaResetExpira = null;
 
